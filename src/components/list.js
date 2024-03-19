@@ -25,6 +25,7 @@ class List extends HTMLElement {
             width: 90%;
             border: none;
             text-align: left;
+            font-size: 18px;
           }
 
           .button-accordion:hover {
@@ -65,6 +66,10 @@ class List extends HTMLElement {
 
           a:hover{
             opacity: 0.7;
+          }
+
+          p{
+            font-size: 18px;
           }
         </style>
         
