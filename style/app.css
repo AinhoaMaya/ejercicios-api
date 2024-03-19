@@ -2,3 +2,20 @@
   margin: 0;
   padding: 0;
 }
+
+.container {
+  display: flex;
+  flex-direction: column; /* Cambio clave aquí */
+}
+
+.flex-row {
+  display: flex;
+}
+
+map-component, prompt-component {
+  flex: 1;
+}
+
+list-component {
+  margin-left: 50%;
+}

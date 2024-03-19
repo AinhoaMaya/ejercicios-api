@@ -6,31 +6,33 @@ class Prompt extends HTMLElement {
   }
 
   async connectedCallback () {
-    await this.loadData()
+    // await this.loadData()
     await this.render()
   }
 
-  async loadData () {
-    const response = await fetch('/src/data/prompt.json')
-    this.data = await response.json()
-  }
+  // async loadData () {
+  //   const response = await fetch('/src/data/prompt.json')
+  //   this.data = await response.json()
+  // }
 
   render () {
     this.shadow.innerHTML =
       /* html */`
         <style>
           .prompt-container{
-            display: flex;
+            padding: 1rem 0;
           }
 
-          .prompt-map{
-            background-color: hsl(0, 0%, 60%);
-          }
         </style>
 
         <div class="prompt-container">
-          <div class="prompt-map">
-
+          <div class="prompt-form">
+            <div class="form-label">
+              <label>¿Qué asociaciones estás buscando?</label>
+            </div>
+            <div class="form-text-area">
+              <textarea id="comments" name="comments" rows="4" cols="100"></textarea>
+            </div>
           </div>
         </div>
       `
