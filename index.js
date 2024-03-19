@@ -1,7 +1,4 @@
-const { reverse } = require('dns');
-
 (async () => {
-  const fs = require('fs');
 
   const towns = ['mallorca', 'mallorquina', 'mallorquinista', 'mallorquins', 'alaro', 'alcudia', 'algaida', 'andratx', 'ariany', 'arta', 'bahia grande', 'bahia grande (llucmajor)', 'banyalbufar',  'bendinat','binissalem', 'biniali - sancelles',
   'buger', 'bunyola', 'caimari',  'cala bona (son servera)','cala millor', 'cala ratjada', 'calvia', 'calvia (cas catala)','calvia (peguera)','campanet', 'can pastilla', "ca'n pastilla", 'canyamel', 'campos', 'camp de mar', 'cas capelles - marratxi', 'cas concos','can picafort', "ca'n picafort", "ca'n picafort (santa margalida)", 'capdepera', 'coll den rebassa', 'colonia sant jordi',  'colonia de sant jordi', 'colonia de sant pere',
@@ -12,36 +9,35 @@ const { reverse } = require('dns');
   'santa eugenia', 'san jordi', 'sant jordi', 'santa margalida', 'santa maria del cami', 'santa maria', 'santanyi', 'santa ponca', 'santa ponsa-calvia', 'santa ponca - calvia', 'santa ponca (calvia)','santa ponsa', 'santa ponsa (calvia)', 'sant elm', 'sa torre', 'secar de la real', 'selva', 'sencelles', 'ses salines', "s'horta", "s'horta-felanitx", "s'illot", "s'indioteria", 'sineu', 'sol de mallorca', 'soller', 'son caliu (calvia)', 'son carrio','son ferriol', 'son ferrer - calvia', 'son mercadal now', 'son rapinya','son rullan', 'son serra', 'son serra de marina',
   'son ferrer', 'son macia (manacor)', 'son sardina', 'son servera', 'son serrvera', 'urb. bahia grande', 'urbanitzacio sant marcal', 'valldemossa', 'valldemosa', 'vilafranca de bonany']
 
-  const response = await fetch('https://catalegdades.caib.cat/api/views/t84h-sihg/rows.json?accessType=DOWNLOAD');
-  const associations = await response.json();
+  const response = await fetch('https://catalegdades.caib.cat/api/views/t84h-sihg/rows.json?accessType=DOWNLOAD')
+  const associations = await response.json()
 
-  rawData = associations.data
-
-  structuredData = rawData.map(([sid, id, position, created_at, created_meta, updated_at, updated_meta, meta, nif, register_num, registerDate, name, address, town, goal, scope]) => {
-    const association = {
-      name,
-      town,
-      address, 
-      goal, 
-      registerDate
-    }
-
-    return association
+  const transformedData = associations.data.map(([
+    sid,
+    id,
+    position,
+    createdAt,
+    createdMeta,
+    updatedAt,
+    updatedMeta,
+    meta,
+    nif,
+    registerNumber,
+    registerDate,
+    name,
+    address,
+    town,
+    goals,
+    scope
+  ]) => {
+    return { name, goals, registerDate, town, address, scope }
   })
 
-  // const currentYear = new Date().getFullYear()
+  const tenYearsAgo = new Date().getFullYear() - 10
 
-  // filteredData = structuredData.filter(element => {
-  //   const yearDifference = currentYear - element.year
-  //   return yearDifference <= 10
-  // })
-
-  let tenYearsAgo = new Date()
-  tenYearsAgo.setFullYear(tenYearsAgo.getFullYear() - 10)
-
-  let { filteredData, discardedData } = structuredData.reduce((acc, association) => {
-    const normalizedTown = association.town ? association.town.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() : null
-    const normalizedAssociationName = association.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+  const { filteredData, discardedData } = transformedData.reduce((acc, association) => {
+    const normalizedTown = association.town ? association.town.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : null
+    const normalizedAssociationName = association.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
     const isRecent = new Date(association.registerDate) > tenYearsAgo
 
     if (normalizedTown && towns.includes(normalizedTown) && isRecent) {
@@ -49,49 +45,26 @@ const { reverse } = require('dns');
     } else if (towns.some(town => normalizedAssociationName.includes(town)) && isRecent) {
       acc.filteredData.push(association)
     } else {
-      if (isRecent) {
-        acc.discardedData.push(association)
-      }
+      acc.discardedData.push(association)
     }
 
-    return acc;
-  }, { filteredData: [], discardedData: [] });
+    return acc
+  }, { filteredData: [], discardedData: [] })
 
-  fs.writeFileSync('associations.json', JSON.stringify(filteredData, null, 2))
-  fs.writeFileSync('descarded.json', JSON.stringify(discardedData, null, 2))
+  const reducedData = filteredData.map(association => {
+    return {
+      name: association.name,
+      goals: association.goals
+    }
+  })
 
-  // filteredData = filteredData.filter(element => {
-  //   if (element.town && towns.includes(element.town)) {
-  //     return element
-  //   } 
-  //   if (!element.town) {
-  //     for (const name in element.name) {
-  //       towns.some(town => {
-  //         return name.includes(town)
-  //       })
+  const chunks = []
+  const chunkSize = Math.ceil(reducedData.length / 120)
 
-  //       if (name) {
-  //         return element
-  //       }
-  //     }
-  //   }
-  // })
- 
-  console.log(filteredData)
-
-  // reducedData = filteredData.map(element => {
-  //   return (element.name, element.goal)
-  // })
-
-  // let chunks = []
-  // let chunkSize = 120
-
-  // for (let chunkCount = 0; chunkCount < reducedData.length; chunkCount += chunkSize) {
-  //   let chunk = reducedData.slice(chunkCount, chunkCount + chunkSize)
-  //   chunks.push(chunk)
-  // }
-  
-  // console.log(chunks)
+  for (let i = 0; i < reducedData.length; i += chunkSize) {
+    const chunk = reducedData.slice(i, i + chunkSize)
+    chunks.push(chunk)
+  }
   
   
 
