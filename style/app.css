@@ -3,19 +3,26 @@
   padding: 0;
 }
 
-.container {
-  display: flex;
-  flex-direction: column; /* Cambio clave aquí */
-}
-
 .flex-row {
   display: flex;
 }
 
-map-component, prompt-component {
+map-component, .prompt-list-container {
   flex: 1;
 }
 
+.prompt-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+prompt-component {
+  position: relative;
+}
+
 list-component {
-  margin-left: 50%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
 }

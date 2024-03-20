@@ -20,7 +20,15 @@ class Prompt extends HTMLElement {
       /* html */`
         <style>
           .prompt-container{
-            padding: 1rem 0;
+            padding: 2rem 0;
+          }
+
+          .form-label{
+            margin-bottom: 0.5rem;
+            font-family: "Montserrat", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-style: normal;
           }
 
         </style>

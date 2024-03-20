@@ -19,12 +19,15 @@ class Map extends HTMLElement {
     this.shadow.innerHTML =
       /* html */`
         <style>
+          .map{
+            background-color:hsl(0, 9%, 86%);
+            width: 95%;
+            height: 54vw;
+          }
         </style>
 
         <div class="map-container">
-          <div class="map">
-            <h1>hola</h1>
-          </div>
+          <div class="map"></div>
         </div>
       `
   }
