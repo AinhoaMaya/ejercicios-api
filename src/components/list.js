@@ -6,22 +6,21 @@ class List extends HTMLElement {
   }
 
   async connectedCallback () {
-    // await this.loadData()
+    await this.loadData()
     await this.render()
   }
 
-  // async loadData () {
-  //   const response = await fetch('/src/data/prompt.json')
-  //   this.data = await response.json()
-  // }
+  async loadData () {
+    const response = await fetch('/src/data/geocodedData.json')
+    this.data = await response.json()
+  }
 
   render () {
     this.shadow.innerHTML =
       /* html */`
         <style>
           .accordion-container{
-            height: 100%;
-            max-height: 90%;
+            max-height: 82vh;
             overflow-y: scroll;
           }
 
@@ -63,6 +62,10 @@ class List extends HTMLElement {
             border-radius: 1rem;
           }
 
+          .content-text{
+            padding: 0 1rem 2rem 1rem;
+          }
+
           .content-border {
             width: 90%;
             border: 1px solid hsl(300, 95%, 29%);
@@ -73,17 +76,17 @@ class List extends HTMLElement {
           }
 
           .content-button-return{
-            padding: 1rem;
+            padding-top: 1rem;
             width: 95.5%;
             display: flex;
-            align-items: center;
-            border-bottom: 1px solid hsl(300, 95%, 29%);
+            justify-content: flex-end;
           }
 
           .content-button-return svg{
-            width: 1.5rem;
-            height: 1.5rem;
-            margin: 0.2rem 0.5rem 0 0;
+            width: 1.7rem;
+            height: 1.7rem;
+            margin-top: 1rem;
+            fill: hsl(300, 95%, 29%);
           }
 
           a{
@@ -93,6 +96,7 @@ class List extends HTMLElement {
             font-optical-sizing: auto;
             font-weight: 600;
             font-style: normal;
+            cursor: pointer;
           }
 
           a:hover{
@@ -100,6 +104,7 @@ class List extends HTMLElement {
           }
 
           h4{
+            margin-top: 0;
             font-size: 20px;
             font-family: "Montserrat", sans-serif;
             font-optical-sizing: auto;
@@ -117,147 +122,66 @@ class List extends HTMLElement {
         </style>
         
         <div class="accordion-container">
-          <button class="button-accordion">OZ.Centro de Artes Escénicas</button>
-          <div class="content">
-            <div class="content-border">
-              <div class="content-button-return">
-                <a href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-left</title><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-                </a>
-                <a href="#">Volver</a>
-              </div>
-              <div class="content-text">
-                <h4>OZ. Centro de Artes Escénicas</h4>
-                <p>Promoure el desenvolupament de les arts escéniques de les Illes Balears</p>
-                <p>Barcarola, núm 4, PB. B, Palma</p>
-              </div>
-            </div>
-          </div>
 
-          <button class="button-accordion">Associació Musical Art Líric</button>
-          <div class="content">
-            <div class="content-border">
-              <div class="content-button-return">
-                <a href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-left</title><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-                </a>
-                <a href="#">Volver</a>
-              </div>
-              <div class="content-text">
-                <h4>Associació Musical Art Líric</h4>
-                <p>Promoure el desenvolupament de les arts escéniques de les Illes Balears</p>
-                <p>Barcarola, núm 4, PB. B, Palma</p>
-              </div>
-            </div>
-          </div>
-
-          <button class="button-accordion">Anima</button>
-          <div class="content">
-            <div class="content-border">
-              <div class="content-button-return">
-                <a href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-left</title><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-                </a>
-                <a href="#">Volver</a>
-              </div>
-              <div class="content-text">
-                <h4>Anima</h4>
-                <p>Promoure el desenvolupament de les arts escéniques de les Illes Balears</p>
-                <p>Barcarola, núm 4, PB. B, Palma</p>
-              </div>
-            </div>
-          </div>
-
-          <button class="button-accordion">Associació de Pares i Mares d'Alumnes Es Ferreret</button>
-          <div class="content">
-            <div class="content-border">
-              <div class="content-button-return">
-                <a href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-left</title><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-                </a>
-                <a href="#">Volver</a>
-              </div>
-              <div class="content-text">
-                <h4>Associació de Pares i Mares d'Alumnes Es Ferreret</h4>
-                <p>Promoure el desenvolupament de les arts escéniques de les Illes Balears</p>
-                <p>Barcarola, núm 4, PB. B, Palma</p>
-              </div>
-            </div>
-          </div>
-
-          <button class="button-accordion">Associació d'Artesns de Pollença</button>
-          <div class="content">
-            <div class="content-border">
-              <div class="content-button-return">
-                <a href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-left</title><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-                </a>
-                <a href="#">Volver</a>
-              </div>
-              <div class="content-text">
-                <h4>Associació d'Artesns de Pollença</h4>
-                <p>Promoure el desenvolupament de les arts escéniques de les Illes Balears</p>
-                <p>Barcarola, núm 4, PB. B, Palma</p>
-              </div>
-            </div>
-          </div>
-
-          <button class="button-accordion">DiscaEsports Balears</button>
-          <div class="content">
-            <div class="content-border">
-              <div class="content-button-return">
-                <a href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-left</title><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-                </a>
-                <a href="#">Volver</a>
-              </div>
-              <div class="content-text">
-                <h4>DiscaEsports Balears</h4>
-                <p>Promoure el desenvolupament de les arts escéniques de les Illes Balears</p>
-                <p>Barcarola, núm 4, PB. B, Palma</p>
-              </div>
-            </div>
-          </div>
-
-          <button class="button-accordion">Picky Puss</button>
-          <div class="content">
-            <div class="content-border">
-              <div class="content-button-return">
-                <a href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-left</title><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-                </a>
-                <a href="#">Volver</a>
-              </div>
-              <div class="content-text">
-                <h4>Picky Puss</h4>
-                <p>Promoure el desenvolupament de les arts escéniques de les Illes Balears</p>
-                <p>Barcarola, núm 4, PB. B, Palma</p>
-              </div>
-            </div>
-          </div>
-
-          <button class="button-accordion">Kreativus, Mentes Creativas</button>
-          <div class="content">
-            <div class="content-border">
-              <div class="content-button-return">
-                <a href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-left</title><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-                </a>
-                <a href="#">Volver</a>
-              </div>
-              <div class="content-text">
-                <h4>Kreativus, Mentes Creativas</h4>
-                <p>Promoure el desenvolupament de les arts escéniques de les Illes Balears</p>
-                <p>Barcarola, núm 4, PB. B, Palma</p>
-              </div>
-            </div>
-          </div>
         </div>
       `
-      // Botón acordeón (list) 
-      const buttons = this.shadowRoot.querySelectorAll('.button-accordion');
 
-      buttons.forEach(button => {
+      // html - js al vuelo 
+      const accordionContainer = this.shadow.querySelector('.accordion-container')
+
+      this.data.forEach(list => {
+        const buttonAccordion = document.createElement('button')
+        buttonAccordion.classList.add('button-accordion')
+        accordionContainer.appendChild(buttonAccordion)
+        buttonAccordion.textContent = list.name
+
+        const content = document.createElement('div')
+        content.classList.add('content')
+        accordionContainer.appendChild(content)
+
+        const contentBorder = document.createElement('div')
+        contentBorder.classList.add('content-border')
+        content.appendChild(contentBorder)
+
+        const contentButtonReturn = document.createElement('div')
+        contentButtonReturn.classList.add('content-button-return')
+        contentBorder.appendChild(contentButtonReturn)
+
+        const linkButton = document.createElement('a')
+        // linkButton.setAttribute('href', list.buttonLink)
+        contentButtonReturn.appendChild(linkButton)
+        linkButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close</title><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>'
+
+        // Botón cerrar acordeón
+        linkButton.addEventListener('click', function(event) {
+          event.preventDefault()
+          const content = this.closest('.content')
+          if (content) {
+            content.style.display = 'none'
+          }
+        })
+
+        const contentText = document.createElement('div')
+        contentText.classList.add('content-text')
+        contentBorder.appendChild(contentText)
+
+        const contentTitle = document.createElement('h4')
+        contentTitle.textContent = list.name
+        contentText.appendChild(contentTitle)
+
+        const contentInfo = document.createElement('p')
+        contentInfo.textContent = list.goals
+        contentText.appendChild(contentInfo)
+
+        const contentPlace = document.createElement('p')
+        contentPlace.textContent = `${list.address} - ${list.town}` 
+        contentText.appendChild(contentPlace)
+      })
+
+      // Botón acordeón (list) 
+      const buttonsAccordion = this.shadowRoot.querySelectorAll('.button-accordion');
+
+      buttonsAccordion.forEach(button => {
         button.addEventListener('click', function() {
           const content = this.nextElementSibling;
           if (content.style.display === "block") {
@@ -268,10 +192,27 @@ class List extends HTMLElement {
         });
       });
 
-      // html - js al vuelo 
-      const accordionContainer = this.shadow.querySelector('.accordion-container')
+      // Al darle click a un acordeón, que se cierre si hay alguno abierto
+      const buttons = this.shadowRoot.querySelectorAll('.button-accordion');
+      const accordionContainerButton = this.shadow.querySelector('.accordion-container');
 
-      
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Primero, se cierran todos los contenidos de acordeón
+          buttons.forEach(otherButton => {
+            const content = otherButton.nextElementSibling;
+            content.style.display = "none";
+          });
+
+          // Se abre solo el que se le da click
+          const content = this.nextElementSibling;
+          content.style.display = "block";
+
+          this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+          // accordionContainerButton.scrollTo(0, 0); // Resetea el scroll del contenedor de acordeones
+        });
+      });
   }
 }
 
