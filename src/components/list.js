@@ -20,7 +20,7 @@ class List extends HTMLElement {
       /* html */`
         <style>
           .accordion-container{
-            max-height: 82vh;
+            max-height: 78vh;
             overflow-y: scroll;
           }
 
@@ -29,15 +29,18 @@ class List extends HTMLElement {
           }
 
           .accordion-container::-webkit-scrollbar-thumb {
-            background-color: hsl(300, 95%, 29%);
+            background-color: hsl(167, 83%, 30%);
           }
 
           .button-accordion {
+            background-color: hsl(167, 83%, 30%);
+            color: hsl(0, 0%, 100%);
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
             cursor: pointer;
             padding: 1rem;
-            width: 90%;
+            width: 95%;
             border: none;
-            text-align: left;
             font-size: 17px;
             font-family: "Montserrat", sans-serif;
             font-optical-sizing: auto;
@@ -46,9 +49,8 @@ class List extends HTMLElement {
           }
 
           .button-accordion:hover {
-            background-color: hsl(300, 95%, 29%);
-            color: hsl(0, 0%, 100%);
-            border-radius: 1rem;
+            background-color: hsl(167, 84%, 43%);
+            color: hsl(0, 0%, 0%);;
           }
 
           .content {
@@ -59,7 +61,7 @@ class List extends HTMLElement {
           }
 
           .content, .content-border, .content-text{
-            border-radius: 1rem;
+            border-radius: 0.5rem;
           }
 
           .content-text{
@@ -67,8 +69,9 @@ class List extends HTMLElement {
           }
 
           .content-border {
-            width: 90%;
-            border: 1px solid hsl(300, 95%, 29%);
+            width: 95%;
+            margin-bottom: 0.5rem;
+            border: 1px solid hsl(167, 83%, 30%);
           }
 
           .content-border p, h4{
@@ -86,7 +89,7 @@ class List extends HTMLElement {
             width: 1.7rem;
             height: 1.7rem;
             margin-top: 1rem;
-            fill: hsl(300, 95%, 29%);
+            fill: hsl(167, 83%, 30%);
           }
 
           a{
@@ -164,10 +167,6 @@ class List extends HTMLElement {
         const contentText = document.createElement('div')
         contentText.classList.add('content-text')
         contentBorder.appendChild(contentText)
-
-        const contentTitle = document.createElement('h4')
-        contentTitle.textContent = list.name
-        contentText.appendChild(contentTitle)
 
         const contentInfo = document.createElement('p')
         contentInfo.textContent = list.goals

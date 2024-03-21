@@ -20,9 +20,9 @@ class Map extends HTMLElement {
       /* html */`
         <style>
           .map{
-            background-color:hsl(0, 9%, 86%);
+            background-color: hsl(167, 84%, 43%);
             width: 95%;
-            height: 54vw;
+            height: 54.4vw;
           }
         </style>
 

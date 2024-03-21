@@ -23,6 +23,10 @@ class Prompt extends HTMLElement {
             padding: 2rem 0;
           }
 
+          textarea{
+            width: 93%;
+          }
+
           .form-label{
             margin-bottom: 0.5rem;
             font-family: "Montserrat", sans-serif;
