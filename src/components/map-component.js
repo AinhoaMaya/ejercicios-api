@@ -5,6 +5,7 @@ class Map extends HTMLElement {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.markers = []
+    this.data = []
     this.loader = new Loader({
       apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
       version: 'weekly'
@@ -12,7 +13,13 @@ class Map extends HTMLElement {
   }
 
   async connectedCallback () {
+    await this.loadData()
     await this.render()
+  }
+
+  async loadData () {
+    const response = await fetch('/src/data/geocodedData.json')
+    this.data = await response.json()
   }
 
   async render () {
@@ -27,10 +34,15 @@ class Map extends HTMLElement {
 
       .map {
         height: 100vh;
-        width: 95%;
+        width: 90%;
       }
 
       .gm-style iframe + div { border:none!important; }
+
+      .RIFvHW-maps-pin-view-background {
+        fill: hsl(167, 83%, 30%);
+      }
+
     </style>
 
     <div class="map"></div>
@@ -47,11 +59,11 @@ class Map extends HTMLElement {
     this.map = await new Map(this.shadow.querySelector('.map'), {
       backgroundColor: 'hsl(217, 89%, 79%)',
       center: { lat: 39.6135612, lng: 2.8820133 },
-      clickableIcons: false, // Que no se puedan clickar los iconos de hoteles, por ejemplo, ya que no interesa en este caso
-      disableDefaultUI: true, // Hace que no puedas ver el StreetView
+      clickableIcons: false,
+      disableDefaultUI: true,
       mapId: '25f3bd1d53babd39',
       minZoom: 10,
-      restriction: { // Restringe las zonas que puedes ver
+      restriction: {
         latLngBounds: {
           east: 4.649715,
           north: 40.971935,
@@ -74,7 +86,7 @@ class Map extends HTMLElement {
         const marker = new AdvancedMarkerElement({
           map: this.map,
           position: { lat: element.latitude, lng: element.longitude },
-          title: element.name,
+          title: element.aso_nom,
           content: pinView.element
         })
 

@@ -129,89 +129,89 @@ class List extends HTMLElement {
         </div>
       `
 
-      // html - js al vuelo 
-      const accordionContainer = this.shadow.querySelector('.accordion-container')
+    // html - js al vuelo
+    const accordionContainer = this.shadow.querySelector('.accordion-container')
 
-      this.data.forEach(list => {
-        const buttonAccordion = document.createElement('button')
-        buttonAccordion.classList.add('button-accordion')
-        accordionContainer.appendChild(buttonAccordion)
-        buttonAccordion.textContent = list.name
+    this.data.forEach(list => {
+      const buttonAccordion = document.createElement('button')
+      buttonAccordion.classList.add('button-accordion')
+      accordionContainer.appendChild(buttonAccordion)
+      buttonAccordion.textContent = list.name
 
-        const content = document.createElement('div')
-        content.classList.add('content')
-        accordionContainer.appendChild(content)
+      const content = document.createElement('div')
+      content.classList.add('content')
+      accordionContainer.appendChild(content)
 
-        const contentBorder = document.createElement('div')
-        contentBorder.classList.add('content-border')
-        content.appendChild(contentBorder)
+      const contentBorder = document.createElement('div')
+      contentBorder.classList.add('content-border')
+      content.appendChild(contentBorder)
 
-        const contentButtonReturn = document.createElement('div')
-        contentButtonReturn.classList.add('content-button-return')
-        contentBorder.appendChild(contentButtonReturn)
+      const contentButtonReturn = document.createElement('div')
+      contentButtonReturn.classList.add('content-button-return')
+      contentBorder.appendChild(contentButtonReturn)
 
-        const linkButton = document.createElement('a')
-        contentButtonReturn.appendChild(linkButton)
-        linkButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close</title><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>'
+      const linkButton = document.createElement('a')
+      contentButtonReturn.appendChild(linkButton)
+      linkButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close</title><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>'
 
-        // Botón cerrar acordeón (svg)
-        linkButton.addEventListener('click', function(event) {
-          event.preventDefault()
-          const content = this.closest('.content')
-          if (content) {
-            content.style.display = 'none'
-          }
-        })
-
-        const contentText = document.createElement('div')
-        contentText.classList.add('content-text')
-        contentBorder.appendChild(contentText)
-
-        const contentInfo = document.createElement('p')
-        contentInfo.textContent = list.goals
-        contentText.appendChild(contentInfo)
-
-        // const svgHTML = '<svg style="width:16px;height:16px;vertical-align:middle;margin-right:5px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>'
-        // ${svgHTML}
-        const contentPlace = document.createElement('p')
-        contentPlace.innerHTML = `${list.address} - ${list.town}` 
-        contentText.appendChild(contentPlace)
+      // Botón cerrar acordeón (svg)
+      linkButton.addEventListener('click', function (event) {
+        event.preventDefault()
+        const content = this.closest('.content')
+        if (content) {
+          content.style.display = 'none'
+        }
       })
 
-      // Botón acordeón (list) 
-      const buttonsAccordion = this.shadowRoot.querySelectorAll('.button-accordion');
+      const contentText = document.createElement('div')
+      contentText.classList.add('content-text')
+      contentBorder.appendChild(contentText)
 
-      buttonsAccordion.forEach(button => {
-        button.addEventListener('click', function() {
-          const content = this.nextElementSibling;
-          if (content.style.display === "block") {
-            content.style.display = "none";
-          } else {
-            content.style.display = "block";
-          }
-        });
-      });
+      const contentInfo = document.createElement('p')
+      contentInfo.textContent = list.goals
+      contentText.appendChild(contentInfo)
 
-      // Al darle click a un acordeón, que se cierre si hay alguno abierto
-      const buttons = this.shadowRoot.querySelectorAll('.button-accordion');
+      // const svgHTML = '<svg style="width:16px;height:16px;vertical-align:middle;margin-right:5px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>'
+      // ${svgHTML}
+      const contentPlace = document.createElement('p')
+      contentPlace.innerHTML = `${list.address} - ${list.town}`
+      contentText.appendChild(contentPlace)
+    })
 
-      buttons.forEach(button => {
-        button.addEventListener('click', function() {
-          // Primero, se cierran todos los contenidos de acordeón
-          buttons.forEach(otherButton => {
-            const content = otherButton.nextElementSibling;
-            content.style.display = "none";
-          });
+    // Botón acordeón (list)
+    const buttonsAccordion = this.shadowRoot.querySelectorAll('.button-accordion')
 
-          // Se abre solo el que se le da click
-          const content = this.nextElementSibling;
-          content.style.display = "block";
+    buttonsAccordion.forEach(button => {
+      button.addEventListener('click', function () {
+        const content = this.nextElementSibling
+        if (content.style.display === 'block') {
+          content.style.display = 'none'
+        } else {
+          content.style.display = 'block'
+        }
+      })
+    })
 
-          this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // Al darle click a un acordeón, que se cierre si hay alguno abierto
+    const buttons = this.shadowRoot.querySelectorAll('.button-accordion')
 
-          // accordionContainerButton.scrollTo(0, 0); // Resetea el scroll del contenedor de acordeones
-        });
-      });
+    buttons.forEach(button => {
+      button.addEventListener('click', function () {
+        // Primero, se cierran todos los contenidos de acordeón
+        buttons.forEach(otherButton => {
+          const content = otherButton.nextElementSibling
+          content.style.display = 'none'
+        })
+
+        // Se abre solo el que se le da click
+        const content = this.nextElementSibling
+        content.style.display = 'block'
+
+        this.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+
+        // accordionContainerButton.scrollTo(0, 0); // Resetea el scroll del contenedor de acordeones
+      })
+    })
   }
 }
 
