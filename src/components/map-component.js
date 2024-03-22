@@ -62,7 +62,7 @@ class Map extends HTMLElement {
       clickableIcons: false,
       disableDefaultUI: true,
       mapId: '25f3bd1d53babd39',
-      minZoom: 10,
+      minZoom: 8,
       restriction: {
         latLngBounds: {
           east: 4.649715,
@@ -72,7 +72,7 @@ class Map extends HTMLElement {
         },
         strictBounds: true
       },
-      zoom: 10
+      zoom: 8
     })
 
     this.data.forEach((element) => {
