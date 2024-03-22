@@ -1,3 +1,5 @@
+import { store } from '../redux/store.js'
+
 class List extends HTMLElement {
   constructor () {
     super()
@@ -6,6 +8,17 @@ class List extends HTMLElement {
   }
 
   async connectedCallback () {
+    this.unsubscribe = store.subscribe(() => {
+      const currentState = store.getState()
+      console.log(currentState.map.pinElement.title)
+
+      const associationMap = this.shadow.querySelector('.accordion-container')
+
+      this.data.forEach(map => {
+        associationMap.dataset.map = map.pinElement.title
+      // associationMap.classList.add('content-border')
+      })
+    })
     await this.loadData()
     await this.render()
   }

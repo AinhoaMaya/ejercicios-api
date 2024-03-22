@@ -3,24 +3,19 @@ import { createSlice } from '@reduxjs/toolkit'
 export const mapSlice = createSlice({
   name: 'map',
   initialState: {
-    pinElement: {}
+    pinElement: {
+      title: null,
+      longitude: null,
+      latitude: null
+    }
   },
   reducers: {
-    // Actualiza la lista de elementos de pin (pinElements) con los datos proporcionados:
-    // State: el estado actual del slice
-    // Action: el objeto de acción que fue despachado
-    loadData: (state, action) => {
-      state.pinElements = action.payload
-    },
-    selectLocation: (state, action) => {
-      state.selectedLocation = action.payload
-    },
-    resetMap: (state) => {
-      state.selectedLocation = null
+    setPinElement: (state, action) => {
+      state.pinElement = action.payload
     }
   }
 })
 
-export const { loadData, selectLocation, resetMap } = mapSlice.actions
+export const { setPinElement, setElements } = mapSlice.actions
 
 export default mapSlice.reducer

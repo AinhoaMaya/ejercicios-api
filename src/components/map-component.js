@@ -1,3 +1,5 @@
+import { store } from '../redux/store.js'
+import { setPinElement } from '../redux/map-slice.js'
 import { Loader } from '@googlemaps/js-api-loader'
 
 class Map extends HTMLElement {
@@ -96,6 +98,8 @@ class Map extends HTMLElement {
             longitude: element.longitude,
             latitude: element.latitude
           }
+
+          store.dispatch(setPinElement(pinElement))
         })
 
         this.markers.push(marker)
