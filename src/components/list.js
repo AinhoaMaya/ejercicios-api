@@ -69,7 +69,7 @@ class List extends HTMLElement {
           }
 
           .content-border {
-            width: 95%;
+            width: 94.5%;
             margin-bottom: 0.5rem;
             border: 1px solid hsl(167, 83%, 30%);
           }
@@ -79,7 +79,6 @@ class List extends HTMLElement {
           }
 
           .content-button-return{
-            padding-top: 1rem;
             width: 95.5%;
             display: flex;
             justify-content: flex-end;
@@ -121,6 +120,7 @@ class List extends HTMLElement {
             font-optical-sizing: auto;
             font-weight: 500;
             font-style: normal;
+            margin: 0.5rem 0;
           }
         </style>
         
@@ -151,11 +151,10 @@ class List extends HTMLElement {
         contentBorder.appendChild(contentButtonReturn)
 
         const linkButton = document.createElement('a')
-        // linkButton.setAttribute('href', list.buttonLink)
         contentButtonReturn.appendChild(linkButton)
         linkButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close</title><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>'
 
-        // Botón cerrar acordeón
+        // Botón cerrar acordeón (svg)
         linkButton.addEventListener('click', function(event) {
           event.preventDefault()
           const content = this.closest('.content')
@@ -172,8 +171,10 @@ class List extends HTMLElement {
         contentInfo.textContent = list.goals
         contentText.appendChild(contentInfo)
 
+        // const svgHTML = '<svg style="width:16px;height:16px;vertical-align:middle;margin-right:5px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>'
+        // ${svgHTML}
         const contentPlace = document.createElement('p')
-        contentPlace.textContent = `${list.address} - ${list.town}` 
+        contentPlace.innerHTML = `${list.address} - ${list.town}` 
         contentText.appendChild(contentPlace)
       })
 
@@ -193,7 +194,6 @@ class List extends HTMLElement {
 
       // Al darle click a un acordeón, que se cierre si hay alguno abierto
       const buttons = this.shadowRoot.querySelectorAll('.button-accordion');
-      const accordionContainerButton = this.shadow.querySelector('.accordion-container');
 
       buttons.forEach(button => {
         button.addEventListener('click', function() {
