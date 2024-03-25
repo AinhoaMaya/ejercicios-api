@@ -1,3 +1,4 @@
+import { setPinElement } from '../redux/map-slice.js'
 import { store } from '../redux/store.js'
 
 class List extends HTMLElement {
@@ -197,6 +198,7 @@ class List extends HTMLElement {
         if (content) {
           content.style.display = 'none'
         }
+        store.dispatch(setPinElement({}))
       })
 
       const contentText = document.createElement('div')
@@ -217,12 +219,23 @@ class List extends HTMLElement {
 
     buttonsAccordion.forEach(button => {
       button.addEventListener('click', function () {
-        const content = this.nextElementSibling
-        if (content.style.display === 'block') {
-          content.style.display = 'none'
-        } else {
-          content.style.display = 'block'
+        const title = this.dataset.title // Asume que `data-title` corresponde al título del pin
+        const pinElement = {
+          title
+          // longitude y latitude podrían ser añadidos si son necesarios y están disponibles
         }
+
+        // Despacha la acción para actualizar el pin activo en el estado global
+        store.dispatch(setPinElement(pinElement))
+
+        button.addEventListener('click', function () {
+          const content = this.nextElementSibling
+          if (content.style.display === 'block') {
+            content.style.display = 'none'
+          } else {
+            content.style.display = 'block'
+          }
+        })
       })
     })
 

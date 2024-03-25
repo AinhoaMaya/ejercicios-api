@@ -17,6 +17,19 @@ class Map extends HTMLElement {
   async connectedCallback () {
     await this.loadData()
     await this.render()
+
+    this.unsubscribe = store.subscribe(() => {
+      const currentState = store.getState()
+      const activeTitle = currentState.map.pinElement.title
+
+      const activeLocation = this.data.find(location => location.name === activeTitle)
+
+      if (activeLocation) {
+        this.showLocation(activeLocation)
+      } else {
+        this.resetMap()
+      }
+    })
   }
 
   async loadData () {
@@ -43,10 +56,6 @@ class Map extends HTMLElement {
 
       .RIFvHW-maps-pin-view-background {
         fill: hsl(167, 83%, 30%);
-      }
-
-      .RIFvHW-maps-pin-view-background.active {
-        fill: hsl(0, 64%, 52%);
       }
     </style>
 
@@ -129,6 +138,23 @@ class Map extends HTMLElement {
       } else {
         marker.setMap(null)
       }
+    })
+  }
+
+  async resetMap () {
+    const { PinElement } = await this.google.maps.importLibrary('marker')
+
+    this.map.setCenter({ lat: 39.6135612, lng: 2.8820133 })
+    this.map.setZoom(8)
+    this.markers.forEach(marker => {
+      const pinView = new PinElement({
+        background: 'hsl(280deg 56% 47%)',
+        borderColor: 'hsl(0deg 0% 0%)',
+        glyphColor: 'hsl(0deg 0% 0%)'
+      })
+
+      marker.setMap(this.map)
+      marker.content = pinView.element
     })
   }
 }

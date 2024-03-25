@@ -32,6 +32,7 @@ class Prompt extends HTMLElement {
           .form-button button{
             background-color: hsl(167, 83%, 30%);
             color: hsl(0, 0%, 100%);
+            border-radius: 0.5rem;
             cursor: pointer;
             border: none;
             font-size: 12px;
