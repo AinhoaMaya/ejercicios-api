@@ -18,6 +18,7 @@ class Map extends HTMLElement {
     await this.loadData()
     await this.render()
 
+    // Al pulsar sobre un registro de la tabla se muestra sobre el mapa
     this.unsubscribe = store.subscribe(() => {
       const currentState = store.getState()
       const activeTitle = currentState.map.pinElement.title
@@ -39,27 +40,27 @@ class Map extends HTMLElement {
 
   async render () {
     this.shadow.innerHTML =
-    /* html */`<style>
+    /* html */`
+      <style>
+        :host {
+          display: block;
+          height: 100%;
+          width: 100%;
+        }
 
-      :host {
-        display: block;
-        height: 100%;
-        width: 100%;
-      }
+        .map {
+          height: 100vh;
+          width: 90%;
+        }
 
-      .map {
-        height: 100vh;
-        width: 90%;
-      }
+        .gm-style iframe + div { border:none!important; }
 
-      .gm-style iframe + div { border:none!important; }
+        .RIFvHW-maps-pin-view-background {
+          fill: hsl(167, 83%, 30%);
+        }
+      </style>
 
-      .RIFvHW-maps-pin-view-background {
-        fill: hsl(167, 83%, 30%);
-      }
-    </style>
-
-    <div class="map"></div>
+      <div class="map"></div>
     `
 
     await this.loadMap()
@@ -144,6 +145,7 @@ class Map extends HTMLElement {
   async resetMap () {
     const { PinElement } = await this.google.maps.importLibrary('marker')
 
+    // Se resetea el zoom al cerrar el botón del acordeón
     this.map.setCenter({ lat: 39.6135612, lng: 2.8820133 })
     this.map.setZoom(8)
     this.markers.forEach(marker => {

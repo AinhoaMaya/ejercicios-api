@@ -26,20 +26,6 @@ class List extends HTMLElement {
           button.nextElementSibling.style.display = 'none'
         }
       })
-
-      // Al pulsar sobre un registro de la tabla se muestra sobre el mapa
-      const pinMap = this.shadow.querySelectorAll('.button-accordion')
-
-      pinMap.forEach(pinElement => {
-        if (pinElement.dataset.title === activeTitle) {
-          const pinAccordion = pinElement.nextElementSibling
-          // pinAccordion.style.display = 'block'
-          pinAccordion.classList.add('active')
-          pinAccordion.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-        } else {
-          pinElement.nextElementSibling.style.display = 'none'
-        }
-      })
     })
 
     await this.loadData()
