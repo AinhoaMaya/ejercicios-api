@@ -11,14 +11,36 @@ class List extends HTMLElement {
     this.unsubscribe = store.subscribe(() => {
       const currentState = store.getState()
       console.log(currentState.map.pinElement.title)
+      const activeTitle = currentState.map.pinElement.title
 
-      const associationMap = this.shadow.querySelector('.accordion-container')
+      // Al pulsar sobre un registro del mapa se muestra en la tabla
+      const buttonsAccordion = this.shadow.querySelectorAll('.button-accordion')
 
-      this.data.forEach(map => {
-        associationMap.dataset.map = map.pinElement.title
-      // associationMap.classList.add('content-border')
+      buttonsAccordion.forEach(button => {
+        if (button.dataset.title === activeTitle) {
+          const contentAccordion = button.nextElementSibling
+          contentAccordion.style.display = 'block'
+          contentAccordion.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+        } else {
+          button.nextElementSibling.style.display = 'none'
+        }
+      })
+
+      // Al pulsar sobre un registro de la tabla se muestra sobre el mapa
+      const pinMap = this.shadow.querySelectorAll('.button-accordion')
+
+      pinMap.forEach(pinElement => {
+        if (pinElement.dataset.title === activeTitle) {
+          const pinAccordion = pinElement.nextElementSibling
+          // pinAccordion.style.display = 'block'
+          pinAccordion.classList.add('active')
+          pinAccordion.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+        } else {
+          pinElement.nextElementSibling.style.display = 'none'
+        }
       })
     })
+
     await this.loadData()
     await this.render()
   }
@@ -63,7 +85,7 @@ class List extends HTMLElement {
 
           .button-accordion:hover {
             background-color: hsl(167, 84%, 43%);
-            color: hsl(0, 0%, 0%);;
+            color: hsl(0, 0%, 0%);
           }
 
           .content {
@@ -149,6 +171,7 @@ class List extends HTMLElement {
       const buttonAccordion = document.createElement('button')
       buttonAccordion.classList.add('button-accordion')
       accordionContainer.appendChild(buttonAccordion)
+      buttonAccordion.dataset.title = list.name
       buttonAccordion.textContent = list.name
 
       const content = document.createElement('div')
@@ -184,8 +207,6 @@ class List extends HTMLElement {
       contentInfo.textContent = list.goals
       contentText.appendChild(contentInfo)
 
-      // const svgHTML = '<svg style="width:16px;height:16px;vertical-align:middle;margin-right:5px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>'
-      // ${svgHTML}
       const contentPlace = document.createElement('p')
       contentPlace.innerHTML = `${list.address} - ${list.town}`
       contentText.appendChild(contentPlace)
