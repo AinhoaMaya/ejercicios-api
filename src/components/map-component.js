@@ -21,14 +21,15 @@ class Map extends HTMLElement {
     // Al pulsar sobre un registro de la tabla se muestra sobre el mapa
     this.unsubscribe = store.subscribe(() => {
       const currentState = store.getState()
-      const activeTitle = currentState.map.pinElement.title
+      const pinElement = currentState.map.pinElement
 
-      const activeLocation = this.data.find(location => location.name === activeTitle)
-
-      if (activeLocation) {
-        this.showLocation(activeLocation)
-      } else {
+      if (pinElement.title === null) {
         this.resetMap()
+      } else {
+        const activeLocation = this.data.find(location => location.name === pinElement.title)
+        if (activeLocation) {
+          this.showLocation(activeLocation)
+        }
       }
     })
   }
@@ -145,7 +146,7 @@ class Map extends HTMLElement {
   async resetMap () {
     const { PinElement } = await this.google.maps.importLibrary('marker')
 
-    // Se resetea el zoom al cerrar el botón del acordeón
+    // Se resetea el zoom al cerrar el botón de cerrar del acordeón
     this.map.setCenter({ lat: 39.6135612, lng: 2.8820133 })
     this.map.setZoom(8)
     this.markers.forEach(marker => {

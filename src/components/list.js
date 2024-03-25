@@ -200,28 +200,33 @@ class List extends HTMLElement {
       contentText.appendChild(contentPlace)
     })
 
+    this.shadowRoot.querySelectorAll('.content-button-return a').forEach(linkButton => {
+      linkButton.addEventListener('click', (event) => {
+        event.preventDefault()
+        store.dispatch(setPinElement({ title: null }))
+      })
+    })
+
     // Botón acordeón (list)
     const buttonsAccordion = this.shadowRoot.querySelectorAll('.button-accordion')
 
     buttonsAccordion.forEach(button => {
       button.addEventListener('click', function () {
-        const title = this.dataset.title // Asume que `data-title` corresponde al título del pin
+        const title = this.dataset.title
         const pinElement = {
           title
-          // longitude y latitude podrían ser añadidos si son necesarios y están disponibles
         }
 
-        // Despacha la acción para actualizar el pin activo en el estado global
         store.dispatch(setPinElement(pinElement))
+      })
 
-        button.addEventListener('click', function () {
-          const content = this.nextElementSibling
-          if (content.style.display === 'block') {
-            content.style.display = 'none'
-          } else {
-            content.style.display = 'block'
-          }
-        })
+      button.addEventListener('click', function (event) {
+        event.preventDefault()
+        const content = this.closest('.content')
+        if (content) {
+          content.style.display = 'none'
+        }
+        store.dispatch(setPinElement({}))
       })
     })
 
@@ -241,8 +246,6 @@ class List extends HTMLElement {
         content.style.display = 'block'
 
         this.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-
-        // accordionContainerButton.scrollTo(0, 0); // Resetea el scroll del contenedor de acordeones
       })
     })
   }

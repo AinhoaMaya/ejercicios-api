@@ -2,27 +2,3 @@
   margin: 0;
   padding: 0;
 }
-
-.flex-row {
-  display: flex;
-}
-
-map-component, .prompt-list-container {
-  flex: 1;
-}
-
-.prompt-list-container {
-  display: flex;
-  flex-direction: column;
-}
-
-prompt-component {
-  position: relative;
-}
-
-list-component {
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-}
