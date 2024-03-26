@@ -1,4 +1,6 @@
 import './components/page.js'
+import './components/row.js'
+import './components/column.js'
 import './components/main.js'
 import './components/map-component.js'
 import './components/prompt.js'

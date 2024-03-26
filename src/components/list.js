@@ -221,12 +221,26 @@ class List extends HTMLElement {
       })
 
       button.addEventListener('click', function (event) {
-        event.preventDefault()
-        const content = this.closest('.content')
-        if (content) {
-          content.style.display = 'none'
-        }
-        store.dispatch(setPinElement({}))
+        button.addEventListener('click', function () {
+          event.preventDefault()
+          const content = this.nextElementSibling
+          const isOpen = content.style.display === 'block'
+
+          // Si está abierto se cierra; Si está cerrado, se abre
+          content.style.display = isOpen ? 'none' : 'block'
+
+          if (!isOpen) {
+            const title = this.dataset.title
+            const pinElement = { title }
+            store.dispatch(setPinElement(pinElement))
+          } else {
+            store.dispatch(setPinElement({ title: null }))
+          }
+
+          if (!isOpen) {
+            this.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+          }
+        })
       })
     })
 

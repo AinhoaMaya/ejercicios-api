@@ -43,12 +43,6 @@ class Map extends HTMLElement {
     this.shadow.innerHTML =
     /* html */`
       <style>
-        :host {
-          display: block;
-          height: 100%;
-          width: 100%;
-        }
-
         .map {
           height: 100vh;
           width: 90%;

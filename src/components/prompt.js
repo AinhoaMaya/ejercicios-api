@@ -75,8 +75,9 @@ class Prompt extends HTMLElement {
   }
 
   async sendForm () {
-    const comments = this.shadow.querySelector('#comments').value
-    const formDataJson = { comments }
+    const form = this.shadow.querySelector('form')
+    const formData = new FormData(form)
+    const formDataJson = Object.fromEntries(formData.entries())
 
     const response = await fetch('https://localhost:3000/api/form', {
       method: 'POST',
@@ -85,13 +86,7 @@ class Prompt extends HTMLElement {
       },
       body: JSON.stringify(formDataJson)
     })
-
-    const responseData = await response.json()
-    console.log(responseData)
-  }
-
-  catch (error) {
-    console.error('Error:', error)
+    console.log(response)
   }
 }
 
