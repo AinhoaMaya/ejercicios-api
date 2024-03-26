@@ -11,9 +11,6 @@ class Main extends HTMLElement {
   render () {
     this.shadow.innerHTML =
       /* html */`
-        <style>
-        </style>
-
         <main>
           <slot></slot>
         </main>

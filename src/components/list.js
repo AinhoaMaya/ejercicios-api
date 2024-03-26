@@ -146,9 +146,7 @@ class List extends HTMLElement {
           }
         </style>
         
-        <div class="accordion-container">
-
-        </div>
+        <div class="accordion-container"></div>
       `
 
     // html - js al vuelo
@@ -255,7 +253,7 @@ class List extends HTMLElement {
           content.style.display = 'none'
         })
 
-        // Se abre solo el que se le da click
+        // Se abre solo al que se le da click
         const content = this.nextElementSibling
         content.style.display = 'block'
 

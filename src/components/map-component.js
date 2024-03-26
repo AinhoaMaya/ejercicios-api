@@ -45,7 +45,7 @@ class Map extends HTMLElement {
       <style>
         .map {
           height: 100vh;
-          width: 90%;
+          width: 95%;
         }
 
         .gm-style iframe + div { border:none!important; }

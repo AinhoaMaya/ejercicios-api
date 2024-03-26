@@ -72,6 +72,7 @@ class notFound extends HTMLElement {
             color: hsl(0, 0%, 0%);
           }
         </style>
+        
         <div class="text-content">
           <div class="text-not-found">
             <div class="text-container">
